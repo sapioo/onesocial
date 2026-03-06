@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap');
+@import "tailwindcss";
+
+@source "../**/*.{js,jsx}";
+
+@theme {
+  --color-primary: #f97316;
+  --color-primary-dark: #ea580c;
+  --color-primary-light: #fb923c;
+  --color-accent: #f97316;
+  --color-accent-light: #fdba74;
+  --color-surface: #141414;
+  --color-surface-light: #1c1c1c;
+  --color-surface-lighter: #262626;
+  --color-bg: #0a0a0a;
+  --color-bg-alt: #0f0f0f;
+  --color-text: #fafafa;
+  --color-text-muted: #737373;
+  --color-border: #262626;
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-instagram: #e1306c;
+  --color-linkedin: #0a66c2;
+  --color-twitter: #1d9bf0;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--color-bg);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249, 115, 22, 0.08), transparent);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: white;
+  }
+}
