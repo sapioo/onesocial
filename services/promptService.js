@@ -14,7 +14,7 @@ const { platformConfig, vibeModifiers, imageActionPrompts } = require("../utils/
 /**
  * Build a caption generation prompt for a specific platform.
  *
- * @param {string} platform       - "instagram" | "linkedin" | "twitter"
+ * @param {string} platform       - "instagram" | "linkedin" | "x"
  * @param {string} content        - User's raw idea / text
  * @param {object} options
  * @param {string} options.vibe        - Key from vibeModifiers (e.g. "funny")
@@ -76,7 +76,7 @@ No explanations.
 /**
  * Build an image generation / editing prompt.
  *
- * @param {string} platform    - "instagram" | "linkedin" | "twitter"
+ * @param {string} platform    - "instagram" | "linkedin" | "x"
  * @param {string} content     - User's raw idea / text
  * @param {string} imageAction - Key from imageActionPrompts
  * @returns {string|null} Prompt string, or null if action is "keep_original"
@@ -104,7 +104,7 @@ professional marketing graphic
   const platformVisualStyles = {
     instagram: "square composition, vibrant colors, visually engaging layout, attention grabbing design",
     linkedin: "professional corporate visual, clean business aesthetic, modern tech startup branding, landscape 1200x627",
-    twitter: "wide banner 16:9, dynamic layout, bold tech themed visuals, high contrast",
+    x: "wide banner 16:9, dynamic layout, bold tech themed visuals, high contrast",
   };
 
   const platformStyle = platformVisualStyles[platform] || "";

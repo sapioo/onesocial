@@ -30,7 +30,7 @@ What's your go-to framework for staying focused? Drop it in the comments 👇
 
 #leadership #productivity #professionalgrowth`,
 
-    twitter: `The secret to going viral isn't luck — it's timing, relevance, and one sentence that makes people stop scrolling. 🧵 Thread:`,
+    x: `The secret to going viral isn't luck — it's timing, relevance, and one sentence that makes people stop scrolling. 🧵 Thread:`,
 };
 
 // ── Stub guard ─────────────────────────────────────────────────────────────
@@ -52,7 +52,7 @@ function getProvider() {
 /**
  * Generate a platform-specific caption for the given content.
  *
- * @param {string} platform    - "instagram" | "linkedin" | "twitter"
+ * @param {string} platform    - "instagram" | "linkedin" | "x"
  * @param {string} content     - Raw topic or idea from the request
  * @param {object} options     - { vibe, accountType, context }
  * @param {string} [manualCaption] - If provided, skip AI and return this directly

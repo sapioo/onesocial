@@ -4,7 +4,7 @@ import ResultCard from "../components/ResultCard";
 const platformLabels = {
     instagram: "Instagram",
     linkedin: "LinkedIn",
-    twitter: "Twitter / X",
+    x: "X",
 };
 
 export default function ResultsPage({ results, originalImage, imageAction, warnings = [], onBack }) {
@@ -40,7 +40,7 @@ export default function ResultsPage({ results, originalImage, imageAction, warni
                                     onClick={() => setActivePlatform(p)}
                                     className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer
                                         ${activePlatform === p
-                                            ? "bg-primary text-white shadow-[0_4px_12px_rgba(249,115,22,0.3)]"
+                                            ? "bg-primary text-white shadow-[0_4px_12px_rgba(0,212,255,0.3)]"
                                             : "text-text-muted hover:text-text"
                                         }`}
                                 >

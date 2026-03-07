@@ -15,7 +15,7 @@ const router = express.Router();
 const { generateCaption } = require('../services/captionService');
 const { generateImage } = require('../services/imageService');
 
-const SUPPORTED_PLATFORMS = ['instagram', 'linkedin', 'twitter'];
+const SUPPORTED_PLATFORMS = ['instagram', 'linkedin', 'x'];
 
 router.post('/', async (req, res) => {
     try {

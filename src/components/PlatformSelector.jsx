@@ -95,7 +95,7 @@ const platforms = [
         ],
     },
     {
-        id: "twitter",
+        id: "x",
         name: "X",
         color: "#000000",
         icon: () => (
@@ -137,7 +137,7 @@ function PlatformContextPanel({ platform, context, setContext }) {
     if (!def) return null;
 
     return (
-        <div className="mt-3 p-4 rounded-xl bg-bg border border-border space-y-4 animate-[fadeIn_0.2s_ease]">
+        <div className="mt-4 p-5 rounded-2xl bg-black/40 border border-white/10 space-y-5 animate-[fadeIn_0.3s_ease]">
             {def.contextFields.map((field) => (
                 <div key={field.key}>
                     <label className="block text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2">{field.label}</label>
@@ -184,58 +184,67 @@ export default function PlatformSelector({ selectedPlatforms, setSelectedPlatfor
     };
 
     return (
-        <div className="bg-surface rounded-2xl border border-border p-6 shadow-xl shadow-black/30">
-            <label className="block text-sm font-semibold text-text mb-1">Select Platforms</label>
-            <p className="text-xs text-text-muted mb-4">Choose platforms and customise options for each.</p>
+        <div className="bg-surface/80 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl shadow-black/50 p-6 sm:p-8">
+            <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Destinations</h3>
+            <p className="text-sm text-text-muted mb-6">Select where you want to post. We’ll auto-format everything.</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-2">
-                {platforms.map((p) => {
-                    const active = selectedPlatforms.includes(p.id);
-                    const isX = p.id === "twitter";
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {platforms.map((platform) => {
+                    const isSelected = selectedPlatforms.includes(platform.id);
+                    const isX = platform.id === "x";
                     return (
-                        <button
-                            key={p.id}
-                            onClick={() => toggle(p.id)}
-                            className="group relative flex flex-col items-center gap-2 p-5 rounded-xl border transition-all duration-200 cursor-pointer hover:scale-[1.02]"
-                            style={{
-                                borderColor: active ? (isX ? "#555" : p.color) : "var(--color-border)",
-                                background: active ? (isX ? "#111111" : `color-mix(in srgb, ${p.color} 12%, var(--color-surface-light))`) : "var(--color-bg)",
-                                boxShadow: active ? (isX ? "0 0 20px rgba(255,255,255,0.06)" : `0 0 20px color-mix(in srgb, ${p.color} 20%, transparent)`) : "none",
-                            }}
-                        >
-                            <span className="transition-transform duration-200 group-hover:scale-110" style={{ color: active ? (isX ? "#ffffff" : p.color) : "var(--color-text-muted)" }}>
-                                {p.icon(active)}
-                            </span>
-                            <span className="text-sm font-semibold" style={{ color: active ? (isX ? "#ffffff" : p.color) : "var(--color-text-muted)" }}>
-                                {p.name}
-                            </span>
-                            {active && (
-                                <span className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-xs" style={{ background: isX ? "#ffffff" : p.color, color: isX ? "#000000" : "#ffffff" }}>
+                        <div key={platform.id} className="relative">
+                            <button
+                                onClick={() => toggle(platform.id)}
+                                className={`w-full flex flex-col items-center justify-center py-6 px-4 gap-3 bg-black/40 border-2 rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden group
+                                    ${isSelected
+                                        ? "scale-[1.02] shadow-2xl"
+                                        : "border-white/10 hover:border-white/30 hover:bg-white/5 hover:-translate-y-1 hover:shadow-xl"
+                                    }`}
+                                style={{
+                                    borderColor: isSelected ? platform.color : undefined,
+                                    boxShadow: isSelected ? `0 10px 30px ${platform.color}40, inset 0 0 20px ${platform.color}15` : undefined
+                                }}
+                            >
+                                <span className={`transition-transform duration-300 ${isSelected ? "scale-110 drop-shadow-lg" : "scale-100 group-hover:scale-110 opacity-70 group-hover:opacity-100"}`} style={{ color: isSelected ? (isX ? "#ffffff" : platform.color) : "var(--color-text-muted)" }}>
+                                    {platform.icon(isSelected)}
+                                </span>
+                                <span className={`text-sm font-bold tracking-wide transition-colors ${isSelected ? "text-white" : "text-text-muted group-hover:text-text"}`}>
+                                    {platform.name}
+                                </span>
+                            </button>
+                            {isSelected && (
+                                <span
+                                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs text-white font-bold shadow-lg shadow-black/50 z-10"
+                                    style={{ background: platform.color, boxShadow: `0 0 10px ${platform.color}` }}
+                                >
                                     ✓
                                 </span>
                             )}
-                        </button>
+                        </div>
                     );
                 })}
             </div>
 
             {/* Per-platform context panels */}
-            {selectedPlatforms.map((platformId) => (
-                <div key={platformId}>
-                    <div className="flex items-center gap-2 mt-4 mb-1">
-                        <div className="h-px flex-1 bg-border" />
-                        <span className="text-xs font-bold text-text-muted uppercase tracking-widest">
-                            {platforms.find((p) => p.id === platformId)?.name} Options
-                        </span>
-                        <div className="h-px flex-1 bg-border" />
+            {
+                selectedPlatforms.map((platformId) => (
+                    <div key={platformId}>
+                        <div className="flex items-center gap-2 mt-4 mb-1">
+                            <div className="h-px flex-1 bg-border" />
+                            <span className="text-xs font-bold text-text-muted uppercase tracking-widest">
+                                {platforms.find((p) => p.id === platformId)?.name} Options
+                            </span>
+                            <div className="h-px flex-1 bg-border" />
+                        </div>
+                        <PlatformContextPanel
+                            platform={platformId}
+                            context={platformContexts[platformId] || {}}
+                            setContext={(updater) => updateContext(platformId, updater)}
+                        />
                     </div>
-                    <PlatformContextPanel
-                        platform={platformId}
-                        context={platformContexts[platformId] || {}}
-                        setContext={(updater) => updateContext(platformId, updater)}
-                    />
-                </div>
-            ))}
-        </div>
+                ))
+            }
+        </div >
     );
 }

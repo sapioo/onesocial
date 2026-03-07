@@ -20,14 +20,14 @@ const { buildImagePrompt } = require('./promptService');
 const PLATFORM_IMAGE_SIZES = {
   instagram: '1024x1024',
   linkedin: '1200x627',
-  twitter: '1280x720',
+  x: '1280x720',
 };
 
 // ── Mock placeholder images (royalty-free Unsplash for demo) ─────────────
 const MOCK_IMAGES = {
   instagram: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1024&h=1024&fit=crop&auto=format',
   linkedin: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=627&fit=crop&auto=format',
-  twitter: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=1280&h=720&fit=crop&auto=format',
+  x: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?w=1280&h=720&fit=crop&auto=format',
 };
 
 // ── Stub guard ───────────────────────────────────────────────────────────
@@ -49,7 +49,7 @@ function getProvider() {
 /**
  * Generate or process an image for the given platform and content.
  *
- * @param {string} platform      - "instagram" | "linkedin" | "twitter"
+ * @param {string} platform      - "instagram" | "linkedin" | "x"
  * @param {string} content       - Raw topic or idea
  * @param {string} imageAction   - Key from imageActionPrompts (e.g. "enhance", "remove_bg")
  * @param {string|null} primaryImageUrl - URL/base64 of the primary uploaded image (or null)

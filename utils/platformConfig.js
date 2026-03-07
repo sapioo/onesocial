@@ -116,7 +116,7 @@ const platformConfig = {
     },
   },
 
-  twitter: {
+  x: {
     captionStyle: `
       Write a Tweet (X post) that is:
       - Punchy and attention-grabbing
@@ -127,7 +127,7 @@ const platformConfig = {
     `.trim(),
 
     imageStyle: `
-      Bold, simple, thumb-stopping image for Twitter/X.
+      Bold, simple, thumb-stopping image for X.
       High contrast, minimal composition, 16:9 ratio.
       No text overlay.
     `.trim(),
@@ -138,7 +138,7 @@ const platformConfig = {
         thread: "Write the opening tweet of a thread — end with '🧵 Thread:' and make people want to read more.",
       },
       audience: {
-        general: "Write for a broad, general Twitter audience.",
+        general: "Write for a broad, general X audience.",
         niche: "Write for a specific niche community — use insider language and shared references.",
         tech: "Write for the tech and developer community on X — precise, nerdy, confident.",
       },

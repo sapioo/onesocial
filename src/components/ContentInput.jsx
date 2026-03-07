@@ -32,6 +32,7 @@ export default function ContentInput({
     accountType, setAccountType,
     manualCaption, setManualCaption,
     imageAction, setImageAction,
+    writeOwn, setWriteOwn,
 }) {
     const maxLength = 2000;
     const charCount = content.length;
@@ -39,7 +40,6 @@ export default function ContentInput({
     const isOverLimit = charCount > maxLength;
     const fileInputRef = useRef(null);
     const [activeTab, setActiveTab] = useState("caption"); // "caption" | "image"
-    const [writeOwn, setWriteOwn] = useState(false);
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -84,24 +84,28 @@ export default function ContentInput({
     const toggleWriteOwn = () => {
         const next = !writeOwn;
         setWriteOwn(next);
-        if (!next) setManualCaption("");
+        if (next) {
+            setManualCaption(content);
+        } else {
+            setManualCaption("");
+        }
     };
 
     return (
-        <div className="bg-surface rounded-2xl border border-border shadow-xl shadow-black/30 overflow-hidden">
+        <div className="bg-surface/80 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl shadow-black/50 overflow-hidden">
             {/* Tabs */}
-            <div className="flex border-b border-border">
+            <div className="flex p-2 bg-black/20">
                 {["caption", "image"].map((tab) => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`flex-1 py-4 text-sm font-bold tracking-wide uppercase transition-all duration-200 cursor-pointer
+                        className={`flex-1 py-3 text-sm font-bold tracking-wide uppercase rounded-xl transition-all duration-300 cursor-pointer
                             ${activeTab === tab
-                                ? "text-primary border-b-2 border-primary bg-primary/5"
-                                : "text-text-muted hover:text-text hover:bg-surface-light"
+                                ? "text-bg bg-primary shadow-[0_0_20px_rgba(0,212,255,0.4)]"
+                                : "text-text-muted hover:text-text hover:bg-white/5"
                             }`}
                     >
-                        {tab === "caption" ? "📝 Caption Studio" : "🖼️ Image Studio"}
+                        {tab === "caption" ? "Caption Studio" : "Image Studio"}
                     </button>
                 ))}
             </div>
@@ -110,16 +114,29 @@ export default function ContentInput({
             {activeTab === "caption" && (
                 <div className="p-6 space-y-5">
                     <div>
-                        <label className="block text-sm font-semibold text-text mb-1">Your Idea or Content</label>
-                        <p className="text-xs text-text-muted mb-3">Describe your post topic, paste a blog excerpt, or write a raw idea.</p>
+                        <label className="block text-sm font-semibold text-text mb-1">
+                            {writeOwn ? "Your Caption" : "Your Idea or Content"}
+                        </label>
+                        <p className="text-xs text-text-muted mb-3">
+                            {writeOwn
+                                ? "Write your caption here — this will be used exactly as typed."
+                                : "Describe your post topic, paste a blog excerpt, or write a raw idea."}
+                        </p>
                         <div className="relative">
                             <textarea
                                 id="content-input"
                                 value={content}
-                                onChange={(e) => setContent(e.target.value.slice(0, maxLength))}
-                                placeholder="e.g. Launching our new product tomorrow — a productivity app for remote teams..."
+                                onChange={(e) => {
+                                    const val = e.target.value.slice(0, maxLength);
+                                    setContent(val);
+                                    if (writeOwn) setManualCaption(val);
+                                }}
+                                placeholder={writeOwn
+                                    ? "Write your caption here — this will be used exactly as typed."
+                                    : "e.g. Launching our new product tomorrow — a productivity app for remote teams..."}
                                 rows={5}
-                                className="w-full bg-bg border border-border rounded-xl p-4 text-sm text-text placeholder:text-text-muted/40 resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                                className={`w-full bg-black/40 border rounded-xl p-5 text-sm text-text placeholder:text-text-muted/40 resize-none outline-none transition-all duration-300 ${writeOwn ? "border-primary/50 focus:border-primary ring-2 ring-primary/20 shadow-[0_0_15px_rgba(0,212,255,0.1)]" : "border-white/10 focus:border-primary focus:ring-2 focus:ring-primary/30"
+                                    }`}
                             />
                             <div className={`absolute bottom-3 right-3 text-xs font-mono ${isOverLimit ? "text-error" : isNearLimit ? "text-amber-400" : "text-text-muted/50"}`}>
                                 {charCount}/{maxLength}
@@ -131,7 +148,7 @@ export default function ContentInput({
                     <div className="flex items-center justify-between p-3 rounded-xl bg-bg border border-border">
                         <div>
                             <p className="text-sm font-semibold text-text">Write my own caption</p>
-                            <p className="text-xs text-text-muted">Skip AI — type your caption directly below</p>
+                            <p className="text-xs text-text-muted">Skip AI — use the box above as your caption</p>
                         </div>
                         <button
                             onClick={toggleWriteOwn}
@@ -141,18 +158,7 @@ export default function ContentInput({
                         </button>
                     </div>
 
-                    {writeOwn ? (
-                        <div>
-                            <label className="block text-xs font-semibold text-text-muted mb-2 uppercase tracking-widest">Your Caption</label>
-                            <textarea
-                                value={manualCaption}
-                                onChange={(e) => setManualCaption(e.target.value)}
-                                placeholder="Write your caption here — this will be used exactly as typed."
-                                rows={4}
-                                className="w-full bg-bg border border-border rounded-xl p-4 text-sm text-text placeholder:text-text-muted/40 resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                            />
-                        </div>
-                    ) : (
+                    {!writeOwn && (
                         <>
                             {/* Vibe selector */}
                             <div>
@@ -252,7 +258,7 @@ export default function ContentInput({
                                             onClick={() => setPrimaryImageIndex(i)}
                                             className={`relative group w-24 h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition-all duration-200
                                                 ${i === primaryImageIndex
-                                                    ? "border-primary shadow-[0_0_16px_rgba(249,115,22,0.35)]"
+                                                    ? "border-primary shadow-[0_0_16px_rgba(0,212,255,0.35)]"
                                                     : "border-border hover:border-primary/40"
                                                 }`}
                                         >

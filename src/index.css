@@ -4,11 +4,11 @@
 @source "../**/*.{js,jsx}";
 
 @theme {
-  --color-primary: #f97316;
-  --color-primary-dark: #ea580c;
-  --color-primary-light: #fb923c;
-  --color-accent: #f97316;
-  --color-accent-light: #fdba74;
+  --color-primary: #00d4ff;
+  --color-primary-dark: #00a8cc;
+  --color-primary-light: #66e5ff;
+  --color-accent: #00d4ff;
+  --color-accent-light: #99edff;
   --color-surface: #141414;
   --color-surface-light: #1c1c1c;
   --color-surface-lighter: #262626;
@@ -21,7 +21,7 @@
   --color-error: #ef4444;
   --color-instagram: #e1306c;
   --color-linkedin: #0a66c2;
-  --color-twitter: #1d9bf0;
+  --color-x: #1d9bf0;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -47,6 +47,42 @@
   }
 }
 
+@keyframes cursorBlink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes shimmerText {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 0% center;
+  }
+}
+
+.text-shimmer {
+  background-image: linear-gradient(to right,
+      #00d4ff 0%,
+      #a855f7 25%,
+      #3b82f6 50%,
+      #a855f7 75%,
+      #00d4ff 100%);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shimmerText 4s linear infinite;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -62,7 +98,7 @@
     -moz-osx-font-smoothing: grayscale;
     background: var(--color-bg);
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249, 115, 22, 0.08), transparent);
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0, 212, 255, 0.08), transparent);
     background-attachment: fixed;
     min-height: 100vh;
   }
